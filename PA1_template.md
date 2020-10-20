@@ -8,8 +8,8 @@ output:
 
 ## Loading and preprocessing the data
 
-```{r Loading And Processing Data, echo = TRUE}
 
+```r
 library(data.table)
 library(ggplot2)
 
@@ -30,36 +30,45 @@ if (!file.exists("activity.csv")) {
 database = read.csv('activity.csv')
 
 str(database)
+```
 
+```
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : chr  "2012-10-01" "2012-10-01" "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 ```
 
 
 
 ## What is mean total number of steps taken per day?
 
-```{r What is mean total number of steps taken per day, echo = TRUE}
 
+```r
 plotdata1 <- aggregate(steps~date,database,sum)
 
 hist(plotdata1$steps, main = "Total Number Of Steps Taken Each Day", 
      xlab = "Number of Steps")
+```
 
+![](PA1_template_files/figure-html/What is mean total number of steps taken per day-1.png)<!-- -->
+
+```r
 MeanSteps1 <- mean(plotdata1$steps, na.rm = TRUE)
 
 MedianSteps1 <- median(plotdata1$steps,na.rm = TRUE)
-
 ```
 
-**Mean Total Number Of Steps Taken Per Day** = `r MeanSteps1`
+**Mean Total Number Of Steps Taken Per Day** = 1.0766189\times 10^{4}
 
-**Median Total Number Of Steps Taken Per Day** = `r MedianSteps1`
+**Median Total Number Of Steps Taken Per Day** = 10765
 
 
 
 ## What is the average daily activity pattern? 
 
-```{r What is the average daily activity pattern , echo = TRUE}
 
+```r
 plotdata2 <- aggregate(steps~interval,database,mean)
 
 
@@ -68,19 +77,22 @@ ggplot(data = plotdata2, aes(x = interval, y = steps))+
     ggtitle('Average Daily Activity Pattern')+
     xlab('5 Minute Intervals')+
     ylab('Average Number Of Steps')
-
-MaxInterval <- plotdata2[which.max(plotdata2$steps),1]
-
 ```
 
-**5-Minute Interval With Maximum Number Of Average Steps** = `r MaxInterval`
+![](PA1_template_files/figure-html/What is the average daily activity pattern -1.png)<!-- -->
+
+```r
+MaxInterval <- plotdata2[which.max(plotdata2$steps),1]
+```
+
+**5-Minute Interval With Maximum Number Of Average Steps** = 835
 
 
 
 ## Imputing missing values
 
-```{r Imputing missing values, echo = TRUE}
 
+```r
 NA_Rows <- which(is.na(database$steps))
 
 for(i in NA_Rows){
@@ -94,29 +106,32 @@ plotdata3 <- aggregate(steps~date,database,sum)
 
 hist(plotdata3$steps, main = "Total Number Of Steps Taken Each Day After Impute", 
      xlab = "Number of Steps")
+```
 
+![](PA1_template_files/figure-html/Imputing missing values-1.png)<!-- -->
+
+```r
 MeanSteps2<- mean(plotdata3$steps, na.rm = TRUE)
 MedianSteps2 <- median(plotdata3$steps,na.rm = TRUE)
 
 MeanDifference<-MeanSteps1-MeanSteps2 
 MedianDifference<-MedianSteps1-MedianSteps2 
-
 ```
 
 
-**Mean Total Number Of Steps Taken Per Day After Impute** = `r MeanSteps2`
+**Mean Total Number Of Steps Taken Per Day After Impute** = 1.0766189\times 10^{4}
 
-**Median Total Number Of Steps Taken Per Day After Impute** = `r MedianSteps2`
+**Median Total Number Of Steps Taken Per Day After Impute** = 1.0766189\times 10^{4}
 
-**Mean Value Difference/Impact Before And After Impute** = `r MeanDifference`
+**Mean Value Difference/Impact Before And After Impute** = 0
 
-**Median Value Difference/Impact Before And After Impute** = `r MedianDifference`
+**Median Value Difference/Impact Before And After Impute** = -1.1886792
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r Are there differences in activity patterns between weekdays and weekends, echo = TRUE}
 
+```r
 database$day <-weekdays(as.Date(database[,2]))
 
 weekday <-c('Monday','Tuesday', 'Wednesday', 'Thursday','Friday')
@@ -143,5 +158,6 @@ ggplot(data = plotdata4, aes(x = interval, y = steps))+
     xlab('5 Minute Intervals')+
     ylab('Average Number Of Steps')+
     facet_grid(daytype ~ .)
-
 ```
+
+![](PA1_template_files/figure-html/Are there differences in activity patterns between weekdays and weekends-1.png)<!-- -->
