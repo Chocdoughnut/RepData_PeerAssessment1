@@ -6,6 +6,7 @@ output:
 ---
 
 
+
 ## Loading and preprocessing the data
 
 
@@ -107,6 +108,8 @@ for(i in NA_Rows){
         
     database[i,1] <- tempfill
 }
+
+## End of impute, proceed with further calculations of the histogram with total number of steps per day and mean and median of the total number of steps per day.
 
 plotdata3 <- aggregate(steps~date,database,sum)
 
