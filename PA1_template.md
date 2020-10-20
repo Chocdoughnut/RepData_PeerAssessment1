@@ -6,7 +6,10 @@ output:
 ---
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e252ab5e212780fa999ff1ca1df2aa17a9d9c177
 ## Loading and preprocessing the data
 
 
@@ -92,6 +95,7 @@ MaxInterval <- plotdata2[which.max(plotdata2$steps),1]
 
 ## Imputing missing values
 
+<<<<<<< HEAD
 **Using the average daily patterns computed earlier to replace NA values with average number of steps from similiar intervals**
 
 
@@ -102,6 +106,12 @@ NA_Rows <- which(is.na(database$steps))
 
 ## Loop over row indices with NA and replace them with average daily values from a similiar interval. ##
 
+=======
+
+```r
+NA_Rows <- which(is.na(database$steps))
+
+>>>>>>> e252ab5e212780fa999ff1ca1df2aa17a9d9c177
 for(i in NA_Rows){
         
     tempfill <- plotdata2[which(grepl(database[i,3], plotdata2$interval))[1],2]
@@ -109,8 +119,11 @@ for(i in NA_Rows){
     database[i,1] <- tempfill
 }
 
+<<<<<<< HEAD
 ## End of impute, proceed with further calculations of the histogram with total number of steps per day and mean and median of the total number of steps per day.
 
+=======
+>>>>>>> e252ab5e212780fa999ff1ca1df2aa17a9d9c177
 plotdata3 <- aggregate(steps~date,database,sum)
 
 hist(plotdata3$steps, main = "Total Number Of Steps Taken Each Day After Impute", 

@@ -48,6 +48,7 @@ hist(plotdata1$steps, main = "Total Number Of Steps Taken Each Day",
 MeanSteps1 <- mean(plotdata1$steps, na.rm = TRUE)
 
 MedianSteps1 <- median(plotdata1$steps,na.rm = TRUE)
+<<<<<<< HEAD
 
 ```
 
@@ -72,6 +73,32 @@ ggplot(data = plotdata2, aes(x = interval, y = steps))+
 
 MaxInterval <- plotdata2[which.max(plotdata2$steps),1]
 
+=======
+
+```
+
+**Mean Total Number Of Steps Taken Per Day** = `r MeanSteps1`
+
+**Median Total Number Of Steps Taken Per Day** = `r MedianSteps1`
+
+
+
+## What is the average daily activity pattern? 
+
+```{r What is the average daily activity pattern , echo = TRUE}
+
+plotdata2 <- aggregate(steps~interval,database,mean)
+
+
+ggplot(data = plotdata2, aes(x = interval, y = steps))+
+    geom_line()+
+    ggtitle('Average Daily Activity Pattern')+
+    xlab('5 Minute Intervals')+
+    ylab('Average Number Of Steps')
+
+MaxInterval <- plotdata2[which.max(plotdata2$steps),1]
+
+>>>>>>> e252ab5e212780fa999ff1ca1df2aa17a9d9c177
 ```
 
 **5-Minute Interval With Maximum Number Of Average Steps** = `r MaxInterval`
@@ -80,6 +107,7 @@ MaxInterval <- plotdata2[which.max(plotdata2$steps),1]
 
 ## Imputing missing values
 
+<<<<<<< HEAD
 **Using the average daily patterns computed earlier to replace NA values with average number of steps from similiar intervals**
 
 ```{r Imputing missing values, echo = TRUE}
@@ -90,6 +118,12 @@ NA_Rows <- which(is.na(database$steps))
 
 ## Loop over row indices with NA and replace them with average daily values from a similiar interval. ##
 
+=======
+```{r Imputing missing values, echo = TRUE}
+
+NA_Rows <- which(is.na(database$steps))
+
+>>>>>>> e252ab5e212780fa999ff1ca1df2aa17a9d9c177
 for(i in NA_Rows){
         
     tempfill <- plotdata2[which(grepl(database[i,3], plotdata2$interval))[1],2]
@@ -97,8 +131,11 @@ for(i in NA_Rows){
     database[i,1] <- tempfill
 }
 
+<<<<<<< HEAD
 ## End of impute, proceed with further calculations of the histogram with total number of steps per day and mean and median of the total number of steps per day.
 
+=======
+>>>>>>> e252ab5e212780fa999ff1ca1df2aa17a9d9c177
 plotdata3 <- aggregate(steps~date,database,sum)
 
 hist(plotdata3$steps, main = "Total Number Of Steps Taken Each Day After Impute", 
